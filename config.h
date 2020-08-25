@@ -32,7 +32,7 @@ static const char *colors[][4]      = {
 //};
 
 static const char *const autostart[] = {
-	"feh", "--bg-fill", "/home/wint3rmute/Pictures/Crazy_80s.png", NULL,
+	"feh", "--bg-fill", "/home/wint3rmute/Pictures/wallpapers/vera.png", NULL,
 	"setxkbmap", "pl", NULL,
 	NULL /* terminate */
 };
@@ -79,7 +79,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static int dmenu_color_counter = 0;
 static char dmenu_current_color[] = "#36e9e8";
 static char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb",  dmenu_current_color, "-sf", col_gray1, NULL };
-static const char *termcmd[]  = { "st", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char *thunar_cmd[]  = { "thunar", NULL };
 static const char *flameshot_cmd[]  = { "flameshot", "gui", NULL };
 static const char *lockscreen_cmd[] = { "betterlockscreen", "--lock", "dimblur" };
