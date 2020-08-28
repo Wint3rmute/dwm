@@ -97,6 +97,7 @@ struct Client {
 	Client *snext;
 	Monitor *mon;
 	Window win;
+	Pixmap pixmap;
 };
 
 typedef struct {
@@ -829,6 +830,26 @@ focus(Client *c)
 		attachstack(c);
 		grabbuttons(c, 1);
 		XSetWindowBorder(dpy, c->win, scheme[SchemeSel][ColBorder].pixel);
+		
+		c->pixmap = XCreatePixmap(dpy, c->win, c->w, c->h, DefaultDepth(dpy, screen));
+
+		// GC init
+		XGCValues gr_values; 
+
+		// gr_values.font 		 = drw->fonts->xfont;
+		gr_values.function 	 = GXcopy; 
+		gr_values.plane_mask = AllPlanes; 
+		gr_values.foreground = WhitePixel(dpy,screen); 
+		gr_values.background = BlackPixel(dpy,screen); 
+
+		GC gc = XCreateGC(dpy,c->win, 
+              /* GCFont |*/  GCFunction | GCPlaneMask | GCForeground | GCBackground, 
+              &gr_values); 
+
+		XDrawLine(dpy, c->pixmap, gc, 0, 0, c->w, 0); 
+
+		XSetWindowBorderPixmap(dpy, c->win, c->pixmap);
+
 		setfocus(c);
 	} else {
 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
@@ -1830,6 +1851,9 @@ unfocus(Client *c, int setfocus)
 	grabbuttons(c, 0);
 	//XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
 	XSetWindowBorder(dpy, c->win, scheme[2][ ++colour_counter % 4 ].pixel);
+	
+	//XFreePixmap(c->pixmap, dpy);
+	
 	if (setfocus) {
 		XSetInputFocus(dpy, root, RevertToPointerRoot, CurrentTime);
 		XDeleteProperty(dpy, root, netatom[NetActiveWindow]);
