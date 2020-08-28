@@ -846,8 +846,19 @@ focus(Client *c)
               /* GCFont |*/  GCFunction | GCPlaneMask | GCForeground | GCBackground, 
               &gr_values); 
 
-		XDrawLine(dpy, c->pixmap, gc, 0, 0, c->w, 0); 
+		int y = 0;
+		int x = 100;
 
+		XDrawLine(dpy, c->pixmap, gc, 0, 0, c->w, c->h); 
+
+
+		// for (int i = -c->y; i < c->y; i++)
+		// {
+			// XDrawLine(dpy, c->pixmap, gc, x, i, c->w-x, i); 
+		// }
+		
+		XDrawLine(dpy, c->pixmap, gc, x, y, c->w-x, y); 
+		
 		XSetWindowBorderPixmap(dpy, c->win, c->pixmap);
 
 		setfocus(c);
@@ -1107,8 +1118,8 @@ manage(Window w, XWindowAttributes *wa)
 	wc.border_width = c->bw;
 	XConfigureWindow(dpy, w, CWBorderWidth, &wc);
 	//THIS THING SHOULD BE CHANGED
-	XSetWindowBorder(dpy, w, scheme[2][rand() % 3].pixel);
-	// XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColBorder].pixel);
+	XSetWindowBorder(dpy, w, scheme[SchemeNorm][ColBorder].pixel);
+
 	configure(c); /* propagates border_width, if size doesn't change */
 	updatewindowtype(c);
 	updatesizehints(c);
@@ -1849,8 +1860,7 @@ unfocus(Client *c, int setfocus)
 	if (!c)
 		return;
 	grabbuttons(c, 0);
-	//XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
-	XSetWindowBorder(dpy, c->win, scheme[2][ ++colour_counter % 4 ].pixel);
+	XSetWindowBorder(dpy, c->win, scheme[SchemeNorm][ColBorder].pixel);
 	
 	//XFreePixmap(c->pixmap, dpy);
 	

@@ -1,4 +1,4 @@
-#include "../colors/candy_theme.h"
+#include "../colors/new_theme.h"
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -18,8 +18,8 @@ static const char col_gray4[]       = "#eeeeee";
 
 static const char *colors[][4]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_black, col_black, col_pink,	col_pink  },
-	[SchemeSel]  = { col_black, col_black, col_white,	col_pink },
+	[SchemeNorm] = { col_black, col_black, col_black,	col_pink  },
+	[SchemeSel]  = { col_black, col_black, col_black,	col_pink },
 	[2] 		 = { col_yellow, col_blue, col_green, col_pink },
 };
 
