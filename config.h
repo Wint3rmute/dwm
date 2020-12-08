@@ -1,4 +1,5 @@
-#include "../suckless-themes/candy_theme.h"
+#include "../suckless-themes/ocean_theme.h"
+#include <X11/XF86keysym.h>
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
@@ -19,8 +20,9 @@ static const char col_gray4[]       = "#eeeeee";
 static const char *colors[][4]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_black, col_black, col_pink,	col_pink  },
-	[SchemeSel]  = { col_black, col_black, col_white,	col_pink },
-	[2] 		 = { col_yellow, col_blue, col_green, col_pink },
+	[SchemeSel]  = { col_black, col_black, col_black,	col_pink },
+	//[2] 		 = { col_yellow, col_blue, col_green, col_pink },
+	[2] 		 = { col_black, col_black, col_black, col_black },
 };
 
 
@@ -32,7 +34,9 @@ static const char *colors[][4]      = {
 //};
 
 static const char *const autostart[] = {
-	"feh", "--bg-fill", "/home/wint3rmute/Pictures/Crazy_80s.png", NULL,
+	"feh", "--bg-fill", "/home/wint3rmute/Pictures/wallpapers/vera.png", NULL,
+	"betterlockscreen", "-l", "dimblur", NULL,
+	"picom", "--corner-radius", "10", NULL,
 	"setxkbmap", "pl", NULL,
 	NULL /* terminate */
 };
@@ -77,25 +81,26 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 
 static int dmenu_color_counter = 0;
-static char dmenu_current_color[] = "#36e9e8";
-static char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb",  dmenu_current_color, "-sf", col_gray1, NULL };
+static char dmenu_current_color[] = "#82AAFF";
+//static char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb",  dmenu_current_color, "-sf", col_gray1, NULL };
+static char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *thunar_cmd[]  = { "thunar", NULL };
 static const char *flameshot_cmd[]  = { "flameshot", "gui", NULL };
-static const char *lockscreen_cmd[] = { "betterlockscreen", "--lock", "dimblur" };
+static const char *lockscreen_cmd[] = { "betterlockscreen", "--lock", "dimblur", NULL };
 
-void brr() {
-	Arg arg;// = { .v=dmenucmd };
-	arg.v = dmenucmd;
-	spawn (&arg);
-	
-	strcpy( dmenu_current_color, colors[2][dmenu_color_counter++ % 4]); //= "#d53a98";
-}
+static const char *brightness_up_cmd[] = { "/home/wint3rmute/code/scripts/brightness", "up", NULL };
+static const char *brightness_down_cmd[] = { "/home/wint3rmute/code/scripts/brightness", "down", NULL };
 
+static const char *kbd_brightness_up_cmd[] = { "/home/wint3rmute/code/scripts/keyboard", "3", NULL };
+static const char *kbd_brightness_down_cmd[] = { "/home/wint3rmute/code/scripts/keyboard", "0", NULL };
+
+static const char *volume_up_cmd[] = { "/home/wint3rmute/code/scripts/volume", "up", NULL };
+static const char *volume_down_cmd[] = { "/home/wint3rmute/code/scripts/volume", "down", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_d,      brr,          {  } },
+	{ MODKEY,                       XK_d,      spawn,          { .v = dmenucmd } },
 	//{ MODKEY,                       XK_p,  spawn,          {.v = flameshot_cmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = thunar_cmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
@@ -124,6 +129,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_minus,  setgaps,        {.i = -5 } },
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +5 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ 0,							XF86XK_MonBrightnessUp, spawn, { .v = brightness_up_cmd } },
+	{ 0,							XF86XK_MonBrightnessDown, spawn, { .v = brightness_down_cmd } },
+	{ 0,							XF86XK_KbdBrightnessUp, spawn, { .v = kbd_brightness_up_cmd } },
+	{ 0,							XF86XK_KbdBrightnessDown, spawn, { .v = kbd_brightness_down_cmd } },
+	{ 0,							XF86XK_AudioRaiseVolume, spawn, { .v = volume_up_cmd } },
+	{ 0,							XF86XK_AudioLowerVolume, spawn, { .v = volume_down_cmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
