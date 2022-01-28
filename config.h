@@ -36,8 +36,10 @@ static const char *colors[][4]      = {
 static const char *const autostart[] = {
 	"feh", "--bg-fill", "/home/wint3rmute/Pictures/wallpapers/vera.png", NULL,
 	"betterlockscreen", "-l", "dimblur", NULL,
-	"picom", "--corner-radius", "10", NULL,
+	"picom", NULL,
 	"setxkbmap", "pl", NULL,
+	"bash", "/home/wint3rmute/code/scripts/excellent_words_wallpaper", NULL,
+	"redshift", "51.1:17.03", NULL,
 	NULL /* terminate */
 };
 
@@ -84,7 +86,8 @@ static int dmenu_color_counter = 0;
 static char dmenu_current_color[] = "#82AAFF";
 //static char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb",  dmenu_current_color, "-sf", col_gray1, NULL };
 static char *dmenucmd[] = { "rofi", "-show", "drun", NULL };
-static const char *termcmd[]  = { "st", NULL };
+//static char *dashboard_cmd[] = { "rofi", "-show", "Dashboard", "-modi", "Dashboard:/home/wint3rmute/code/scripts/dashboard.sh", "-lines", "6", "-width", "25", NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
 static const char *thunar_cmd[]  = { "thunar", NULL };
 static const char *flameshot_cmd[]  = { "flameshot", "gui", NULL };
 static const char *lockscreen_cmd[] = { "betterlockscreen", "--lock", "dimblur", NULL };
@@ -101,7 +104,8 @@ static const char *volume_down_cmd[] = { "/home/wint3rmute/code/scripts/volume",
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          { .v = dmenucmd } },
-	//{ MODKEY,                       XK_p,  spawn,          {.v = flameshot_cmd } },
+	//{ MODKEY,                       XK_w,      spawn,          { .v = dashboard_cmd } },
+	{ 0,		                    XK_Print,  spawn,          {.v = flameshot_cmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = thunar_cmd } },
 	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
