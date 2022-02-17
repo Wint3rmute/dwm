@@ -39,7 +39,7 @@ static const char *const autostart[] = {
 	"picom", NULL,
 	"setxkbmap", "pl", NULL,
 	"bash", "/home/wint3rmute/code/scripts/excellent_words_wallpaper", NULL,
-	"redshift", "51.1:17.03", NULL,
+	"redshift", "-l", "51.1:17.03", NULL,
 	NULL /* terminate */
 };
 
